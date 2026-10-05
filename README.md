@@ -7,9 +7,10 @@ Updated: 5th Oct 2'26
 Enable beautiful mashups without the need of skills in HTML or JS.
 
 ## Look Mashup Examples
-![Mashup example Films](https://github.com/IvanAsensioQlik/Qlik-Cloud-Mashup-Builder/img/mashup1.png)
-![Mashup example Sales](https://github.com/IvanAsensioQlik/Qlik-Cloud-Mashup-Builder/img/mashup2.png)
-![Mashup example Sales](https://github.com/IvanAsensioQlik/Qlik-Cloud-Mashup-Builder/img/mashup3.png)
+![Mashup example Films](https://github.com/IvanAsensioQlik/Qlik-Cloud-Mashup-Builder/blob/main/img/mashup1.png)
+![Mashup example Sales](https://github.com/IvanAsensioQlik/Qlik-Cloud-Mashup-Builder/blob/main/img/mashup2.png)
+![Mashup example Sales](https://github.com/IvanAsensioQlik/Qlik-Cloud-Mashup-Builder/blob/main/img/mashup3.png)
 
 ## Mashup Builder environment
-![Mashup Builder](https://github.com/IvanAsensioQlik/Qlik-Cloud-Mashup-Builder/img/mashup_builder.png)
+![Mashup Builder](https://github.com/IvanAsensioQlik/Qlik-Cloud-Mashup-Builder/blob/main/img/Mashup builder.png)
+
