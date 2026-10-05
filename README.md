@@ -6,6 +6,14 @@ Updated: 5th Oct 2'26
 
 Enable beautiful mashups without the need of skills in HTML or JS.
 
+2 versions:
+- qlik-mashup-builder-standalone.html
+  100% self-contained package
+  A file you open by double-clicking in any browser—no internet connection or installation required
+  
+- qlik-mashup-builder.jsx
+  A JSX artifact you can use import from Claude or your favourite dev environment and add your own modifications 
+
 ## Look Mashup Examples
 ![Mashup example Films](https://github.com/IvanAsensioQlik/Qlik-Cloud-Mashup-Builder/blob/main/img/mashup1.png)
 ![Mashup example Sales](https://github.com/IvanAsensioQlik/Qlik-Cloud-Mashup-Builder/blob/main/img/mashup2.png)
