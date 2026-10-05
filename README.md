@@ -12,5 +12,5 @@ Enable beautiful mashups without the need of skills in HTML or JS.
 ![Mashup example Sales](https://github.com/IvanAsensioQlik/Qlik-Cloud-Mashup-Builder/blob/main/img/mashup3.png)
 
 ## Mashup Builder environment
-![Mashup Builder](https://github.com/IvanAsensioQlik/Qlik-Cloud-Mashup-Builder/blob/main/img/Mashup builder.png)
+![Mashup Builder](https://github.com/IvanAsensioQlik/Qlik-Cloud-Mashup-Builder/blob/main/img/Mashup%20builder.png)
 
