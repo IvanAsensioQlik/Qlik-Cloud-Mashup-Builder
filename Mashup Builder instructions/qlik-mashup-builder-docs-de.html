@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Dokumentation — Qlik Mashup Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF; --text:#1E1E1E; --text2:#5F6368; --text3:#8A8F98;
+    --accent:#009845; --accent-dark:#00733A; --card:#F7F8FA; --border:#E5E7EB;
+    --code-bg:#EEF2EF; --radius:10px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#111314; --text:#F1F3F4; --text2:#A6ACB1; --text3:#7D8388;
+      --accent:#2ECC71; --accent-dark:#58E58C; --card:#1A1D1E; --border:#2A2E30; --code-bg:#20262320;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#111314; --text:#F1F3F4; --text2:#A6ACB1; --text3:#7D8388;
+    --accent:#2ECC71; --accent-dark:#58E58C; --card:#1A1D1E; --border:#2A2E30; --code-bg:#202623;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:16px;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  a{color:var(--accent); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  code, .prop{
+    font-family:'SF Mono',Menlo,Consolas,monospace;
+    font-size:.84em; background:var(--code-bg); color:var(--accent-dark);
+    padding:.1em .45em; border-radius:5px; white-space:nowrap;
+  }
+  .layout{display:flex; max-width:1180px; margin:0 auto;}
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    width:252px; flex-shrink:0; position:sticky; top:0; align-self:flex-start;
+    height:100vh; overflow-y:auto; padding:28px 18px 40px 24px;
+    border-right:1px solid var(--border);
+  }
+  .brand{display:flex; align-items:center; gap:9px; margin-bottom:22px;}
+  .brand-mark{
+    width:26px; height:26px; border-radius:7px; background:var(--accent);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .brand-mark svg{width:15px; height:15px;}
+  .brand-name{font-size:14px; font-weight:800; letter-spacing:-.01em;}
+  .brand-sub{font-size:11px; color:var(--text3); margin-top:1px;}
+  nav.toc{font-size:13.5px;}
+  nav.toc .grp{margin-bottom:4px;}
+  nav.toc .grp > a{
+    display:block; padding:7px 10px; border-radius:7px; font-weight:600; color:var(--text);
+  }
+  nav.toc .grp > a:hover{background:var(--card); text-decoration:none;}
+  nav.toc .sub{margin:0 0 10px 10px; padding:0;}
+  nav.toc .sub a{
+    display:block; padding:5px 10px; border-radius:7px; color:var(--text2);
+    font-weight:500; font-size:12.8px;
+  }
+  nav.toc .sub a:hover{background:var(--card); color:var(--text); text-decoration:none;}
+
+  /* ---------- Content ---------- */
+  main{flex:1; min-width:0; padding:44px 48px 120px; max-width:760px;}
+  .eyebrow{
+    font-size:12px; font-weight:700; color:var(--accent); letter-spacing:.03em; margin:0 0 8px;
+  }
+  h1{font-size:30px; font-weight:800; letter-spacing:-.01em; margin:0 0 10px; line-height:1.2;}
+  .lede{font-size:15.5px; color:var(--text2); line-height:1.65; margin:0 0 6px; max-width:62ch;}
+  .meta{font-size:12.5px; color:var(--text3); margin:18px 0 0;}
+
+  section.block{margin-top:64px; padding-top:8px; scroll-margin-top:16px;}
+  section.sub-block{margin-top:40px; scroll-margin-top:16px;}
+  .block-num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:7px; background:var(--accent);
+    color:#fff; font-size:12.5px; font-weight:800; margin-right:10px; flex-shrink:0;
+  }
+  h2{
+    font-size:22px; font-weight:800; letter-spacing:-.01em; margin:0 0 6px;
+    display:flex; align-items:center;
+  }
+  h2 + .intro-text{margin:10px 0 24px 36px; color:var(--text2); font-size:14.5px; line-height:1.65; max-width:58ch;}
+  h3{font-size:16px; font-weight:700; margin:0 0 4px; letter-spacing:-.005em;}
+  .group-intro{color:var(--text2); font-size:13.8px; line-height:1.6; margin:0 0 16px; max-width:58ch;}
+
+  .feature-card{
+    border:1px solid var(--border); border-radius:var(--radius); background:var(--card);
+    padding:18px 20px; margin-bottom:14px;
+  }
+  dl.feature-list{margin:0; padding:0;}
+  dl.feature-list dt{
+    font-weight:700; font-size:14px; color:var(--text); margin-top:14px;
+    display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;
+  }
+  dl.feature-list dt:first-child{margin-top:0;}
+  dl.feature-list dd{
+    margin:4px 0 0; color:var(--text2); font-size:13.6px; line-height:1.6; max-width:60ch;
+  }
+  .where{
+    display:inline-block; font-size:10.5px; font-weight:700; color:var(--text3);
+    border:1px solid var(--border); border-radius:5px; padding:1px 6px; white-space:nowrap;
+  }
+  .default{color:var(--text3); font-size:12.2px;}
+
+  .callout{
+    border-left:3px solid var(--accent); background:var(--card); border-radius:0 8px 8px 0;
+    padding:12px 16px; margin:18px 0; font-size:13.4px; color:var(--text2); line-height:1.6;
+  }
+  .callout strong{color:var(--text);}
+
+  table.swatches{width:100%; border-collapse:collapse; margin:4px 0 0;}
+  table.swatches td{padding:10px 0; border-bottom:1px solid var(--border); vertical-align:middle; font-size:13.6px;}
+  table.swatches tr:last-child td{border-bottom:none;}
+  .sw{
+    display:inline-block; width:34px; height:22px; border-radius:5px; border:1px solid var(--border);
+    vertical-align:middle; margin-right:12px;
+  }
+  .lang-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:8px 20px; margin-top:6px;}
+  .lang-grid div{font-size:13.6px; color:var(--text2); display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding:7px 0;}
+  .lang-grid b{color:var(--text); font-weight:600;}
+
+  hr.divider{border:none; border-top:1px solid var(--border); margin:40px 0;}
+
+  footer.doc-footer{
+    margin-top:70px; padding-top:20px; border-top:1px solid var(--border);
+    font-size:12px; color:var(--text3);
+  }
+
+  @media (max-width: 860px){
+    .sidebar{display:none;}
+    main{padding:28px 20px 90px; max-width:100%;}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></svg></span>
+      <div>
+        <div class="brand-name">Qlik Mashup Builder</div>
+        <div class="brand-sub">Referenzdokumentation</div>
+      </div>
+    </div>
+    <nav class="toc">
+      <div class="grp"><a href="#intro">Einführung</a></div>
+
+      <div class="grp"><a href="#auth">1 · App &amp; Authentifizierung</a></div>
+
+      <div class="grp"><a href="#header">2 · Kopfzeile</a></div>
+      <div class="sub">
+        <a href="#header-nav">Allgemeine Navigation</a>
+        <a href="#header-logo">Logo &amp; Marke</a>
+        <a href="#header-colors">Farben der Kopfzeile</a>
+        <a href="#header-filter">Globales Filterpanel</a>
+        <a href="#header-meta">Titel, Favicon &amp; CSS</a>
+      </div>
+
+      <div class="grp"><a href="#tabs">3 · Tabs erstellen</a></div>
+      <div class="sub">
+        <a href="#tabs-common">Gemeinsame Konzepte</a>
+        <a href="#tab-home">Home-Tab</a>
+        <a href="#tab-analytics">Analytics-Tabs</a>
+        <a href="#tab-rows">Zeilen &amp; Objekte</a>
+      </div>
+
+      <div class="grp"><a href="#palettes">4 · Farbpaletten</a></div>
+      <div class="grp"><a href="#languages">5 · Sprachen</a></div>
+      <div class="grp"><a href="#projects">6 · Projekte speichern &amp; laden</a></div>
+      <div class="grp"><a href="#export">7 · Export</a></div>
+    </nav>
+  </aside>
+
+  <main>
+
+    <section id="intro">
+      <p class="eyebrow">Referenzdokumentation</p>
+      <h1>Qlik Mashup Builder</h1>
+      <p class="lede">Ein visuelles Tool zum Entwerfen eines mobilen Mashups auf Basis der Qlik Embed API, ganz ohne Code: Du konfigurierst die Kopfzeile, erstellst Start- und Analytics-Tabs, ordnest Qlik-Objekte in Zeilen an und exportierst eine fertige <code>index.html</code> (und bei Bedarf eine <code>oauth-callback.html</code>).</p>
+      <p class="lede">Diese Anleitung erklärt Block für Block, was jede Option im Konfigurationspanel bedeutet und wie sie sich auf das exportierte Mashup auswirkt.</p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 1. APP & AUTHENTIFIZIERUNG -->
+    <!-- ============================================================ -->
+    <section class="block" id="auth">
+      <h2><span class="block-num">1</span>App &amp; Authentifizierung</h2>
+      <p class="intro-text">Legt fest, wie sich das exportierte Mashup mit deiner Qlik-Cloud-Umgebung verbindet. Wird einmal konfiguriert und gilt für alle Tabs, sofern ein bestimmter Tab nicht seine eigene App-ID angibt.</p>
+
+      <div class="feature-card">
+        <dl class="feature-list">
+          <dt>App-ID (Standard) <span class="where">global</span></dt>
+          <dd>Die Qlik-App, die für alle Objekte im Mashup verwendet wird, sofern ein Analytics-Tab nicht die Option „Eine andere App-ID als die globale verwenden" aktiviert.</dd>
+
+          <dt>Authentifizierungstyp</dt>
+          <dd>
+            <b>Anonym</b>: Zugriff ohne Benutzeranmeldung, gedacht für öffentliche oder Demo-Inhalte.<br>
+            <b>OAuth2</b>: Der Benutzer meldet sich mit seinen Qlik-Cloud-Zugangsdaten an; erfordert eine Redirect-URL und erzeugt eine zweite Callback-Datei (siehe unten).
+          </dd>
+
+          <dt><span class="prop">data-host</span></dt>
+          <dd>URL des Qlik-Cloud-Tenants (zum Beispiel <code>https://meinefirma.eu.qlikcloud.com</code>). Wird in das Authentifizierungsskript der <code>index.html</code> eingefügt.</dd>
+
+          <dt><span class="prop">data-client-id</span></dt>
+          <dd>In Qlik Cloud registrierte OAuth2/API-Client-ID für diese Integration.</dd>
+
+          <dt><span class="prop">data-access-code</span> <span class="where">nur Anonym</span></dt>
+          <dd>Zugangscode, der die anonyme Ansicht der App ermöglicht.</dd>
+
+          <dt><span class="prop">data-redirect-uri</span> <span class="where">nur OAuth2</span></dt>
+          <dd>URL, zu der Qlik nach dem Login weiterleitet — normalerweise der Ort, an dem du <code>oauth-callback.html</code> veröffentlichst.</dd>
+
+          <dt>oauth-callback.html erzeugen</dt>
+          <dd>
+            Schalter, der nur bei OAuth2-Authentifizierung sichtbar ist. Ist er aktiv, wird beim Klick auf „Exportieren" zusätzlich die Datei <code>oauth-callback.html</code> erzeugt, die für den Abschluss des Login-Vorgangs nötig ist.
+            <div class="callout">Da Browser einen zweiten automatischen Download blockieren, werden beide Dateien zusammen in einer einzigen <code>mashup-export.zip</code> ausgeliefert (<code>index.html</code> + <code>oauth-callback.html</code>).</div>
+          </dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 2. KOPFZEILE -->
+    <!-- ============================================================ -->
+    <section class="block" id="header">
+      <h2><span class="block-num">2</span>Kopfzeile</h2>
+      <p class="intro-text">Die Kopfzeile ist der feste obere Streifen des Mashups — Logo, Filter, Informationen — sowie das System zur Navigation zwischen den Tabs. Ihre Einstellungen sind <b>global</b>: Sie gelten in gleicher Weise für alle Tabs.</p>
+
+      <div class="sub-block" id="header-nav">
+        <h3>Allgemeine Navigation</h3>
+        <p class="group-intro">Wie sich der Benutzer zwischen den Tabs bewegt.</p>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Fußnavigation</dt>
+            <dd>Feste Leiste am unteren Rand mit einer Schaltfläche pro Tab (Symbol + Name). Das Symbol des aktiven Tabs wird mit der „Farbe der Navigationssymbole" hervorgehoben.</dd>
+            <dt>Verstecktes oberes Panel</dt>
+            <dd>Statt einer festen Fußzeile erscheint oben links, vor dem Logo, ein Menüsymbol (☰). Beim Antippen öffnet sich ein dunkles Seitenpanel mit der Liste aller Tabs.</dd>
+            <dt>Allgemeine Schriftart</dt>
+            <dd>Im gesamten exportierten Mashup verwendete Schriftart (Inter, System, Georgia, Monospace, Poppins oder Playfair Display).</dd>
+            <dt>Minimale Textgröße</dt>
+            <dd>Kein Text im Mashup wird je kleiner als diese Größe dargestellt, auch wenn das ursprüngliche Design kleiner war. Schützt die Lesbarkeit auf kleinen Bildschirmen. Standardwert: <span class="default">15px</span>.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sub-block" id="header-logo">
+        <h3>Logo &amp; Marke</h3>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Logo-Position</dt>
+            <dd>Links, mittig oder rechts innerhalb der oberen Leiste.</dd>
+            <dt>Logo</dt>
+            <dd>Bild (URL oder hochgeladene Datei), das neben dem Text davor/danach angezeigt wird.</dd>
+            <dt>Zusätzliches Bild in der Kopfzeile</dt>
+            <dd>Ein zweites kleines Symbol/Bild, das auf der dem Logo gegenüberliegenden Seite platziert wird.</dd>
+            <dt>Text vor dem Logo / Text nach dem Logo</dt>
+            <dd>Textbeschriftungen auf beiden Seiten des Logobilds (zum Beispiel der Firmenname).</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sub-block" id="header-colors">
+        <h3>Farben der Kopfzeile</h3>
+        <p class="group-intro">Es gibt zwei unabhängige Farbebenen: die globale obere Leiste und die Farbe der Navigationssymbole (Fußzeile oder Menü).</p>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Hintergrundfarbe der oberen Leiste</dt>
+            <dd>Hintergrund des festen Streifens, in dem Logo, Filtersymbol und Infosymbol liegen.</dd>
+            <dt>Text- und Symbolfarbe der oberen Leiste</dt>
+            <dd>Wird auf den Logotext und, per Vererbung, auf alle Symbole dieser Leiste (Menü, Filter, Info) angewendet.</dd>
+            <dt>Farbe der Navigationssymbole</dt>
+            <dd>Farbe des Symbols (und, in der Fußzeile, des Texts) des aktiven Tabs innerhalb der Fußnavigation oder des Seitenmenüs.</dd>
+            <dt>Farbe des aktiven Symbols</dt>
+            <dd>Hintergrundfarbe hinter dem Symbol des aktiven Tabs im Seitenmenü-Panel (das Symbol selbst wird darüber gezeichnet), um ausreichenden Kontrast zu den inaktiven Symbolen zu gewährleisten.</dd>
+            <dt>Standardhintergrundfarbe der Objekte</dt>
+            <dd>Farbe, die jedes ab jetzt erstellte Qlik-Objekt (in jedem Analytics-Tab) automatisch erhält. Jedes Objekt kann sie anschließend individuell ändern.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sub-block" id="header-filter">
+        <h3>Globales Filterpanel</h3>
+        <p class="group-intro">Ein einziges Filterpanel, das von allen Analytics-Tabs gemeinsam genutzt wird (erscheint niemals auf Home).</p>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Filterpanel-Symbol</dt>
+            <dd>Aktiviert das Filtersymbol in der Kopfzeile. Beim Antippen öffnet sich eine rechte Schublade mit dem Qlik-Auswahlobjekt.</dd>
+            <dt>Objekt-ID der Auswahl</dt>
+            <dd>Qlik-Objekt-ID, die im Filterpanel angezeigt wird (Typ <code>analytics/chart</code>).</dd>
+            <dt>Breite des Filterpanels</dt>
+            <dd>Breite der Filterschublade in Pixeln. Erlaubter Bereich: <span class="default">200–500px</span>, Standardwert <span class="default">290px</span>.</dd>
+            <dt>Schaltflächen des Filterpanels (bis zu 3)</dt>
+            <dd>Optionale Objekt-IDs von Qlik-Schaltflächen, die direkt in der Kopfzeile erscheinen, links vom Filtersymbol (nicht in der Schublade), in derselben Größe wie dieses Symbol.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sub-block" id="header-meta">
+        <h3>Titel, Favicon &amp; externes CSS</h3>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Seitentitel (<code>&lt;title&gt;</code>)</dt>
+            <dd>Text, der im Browser-Tab und in Lesezeichen angezeigt wird. Bleibt er leer, verwendet der Export standardmäßig „Qlik Mashup".</dd>
+            <dt>Favicon (URL)</dt>
+            <dd>Wenn ausgefüllt, wird ein <code>&lt;link rel="shortcut icon"&gt;</code> in die <code>index.html</code> eingefügt, das auf diese URL verweist.</dd>
+            <dt>Externes CSS importieren (URL)</dt>
+            <dd>Fügt dem <code>&lt;head&gt;</code> des Exports über einen <code>&lt;link rel="stylesheet"&gt;</code> ein zusätzliches Stylesheet hinzu, um Stile zu überschreiben oder zu erweitern.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 3. TABS ERSTELLEN -->
+    <!-- ============================================================ -->
+    <section class="block" id="tabs">
+      <h2><span class="block-num">3</span>Tabs erstellen</h2>
+      <p class="intro-text">Ein Mashup besteht aus zwei Arten von Tabs: <b>Home</b> (Start) und <b>Analytics</b> (analytische Inhalte). Jeder Tab ist unabhängig und hat sein eigenes Konfigurationspanel.</p>
+
+      <div class="sub-block" id="tabs-common">
+        <h3>Konzepte, die für jeden Tab gelten</h3>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Info-Symbol</dt>
+            <dd>Aktiviert ein „i"-Symbol in der Kopfzeile für diesen Tab. Beim Antippen erscheint ein Popup „Über diese App" mit dem von dir geschriebenen Text. URLs und E-Mail-Adressen in diesem Text werden automatisch erkannt und farblich hervorgehoben; Zeilenumbrüche werden als eigene Absätze beibehalten.</dd>
+            <dt>Symbol dieses Tabs in Fußzeile/Menü</dt>
+            <dd>Symbol (aus einem Katalog von 15), das den Tab in der Fußnavigation oder im Seitenmenü repräsentiert.</dd>
+            <dt>Palette dieses Tabs</dt>
+            <dd>Wendet eine der 7 Farbvorlagen (siehe Abschnitt 4) auf den gesamten Tab an: Hintergrund, Karten, Rahmen und Akzente.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sub-block" id="tab-home">
+        <h3>Home-Tab (Start)</h3>
+        <p class="group-intro">Der erste Bildschirm des Mashups: ein Kopfbild oder -video mit Titel, sowie Schnellzugriffe auf die übrigen Tabs.</p>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Hintergrundfarbe</dt>
+            <dd>Eigene Hintergrundfarbe dieses Tabs, unabhängig vom Rest.</dd>
+            <dt>Medientyp / URL</dt>
+            <dd>Hintergrundbild oder -video im oberen Bereich („Hero"). Das Video wird zentriert und zugeschnitten, um den Platz zu füllen, ohne die Kopfzeile zu verdecken.</dd>
+            <dt>Blockhöhe</dt>
+            <dd>Prozentsatz des Bildschirms, den das Kopfbild/-video einnimmt.</dd>
+            <dt>Titel / Untertitel</dt>
+            <dd>Haupttexte, die über dem Kopfbild liegen.</dd>
+            <dt>Textposition</dt>
+            <dd>Position des Titel+Untertitel-Blocks über dem Bild: oben, mittig oder unten, linksbündig oder zentriert.</dd>
+            <dt>Zusätzlicher Text (optional) + Farbe</dt>
+            <dd>Ein zusätzlicher Textblock (zum Beispiel eine beschreibende Unterschrift) mit eigener, konfigurierbarer Farbe.</dd>
+            <dt>Zusätzlichen Text über dem Foto anzeigen</dt>
+            <dd>Schalter: Ist er aktiv, erscheint der zusätzliche Text innerhalb der Kopfzeile/des Fotos (neben dem Titel); andernfalls erscheint er darunter, außerhalb des Bildes.</dd>
+            <dt>Nummerierte Kurzwahlkarten zu Tabs</dt>
+            <dd>Liste von Karten (01, 02, 03…), die direkt zu jedem der anderen Tabs des Mashups verlinken.</dd>
+            <dt>Symbol zum nächsten Tab</dt>
+            <dd>Pfeil über dem Kopfbild, der zum nächsten Tab navigiert.</dd>
+            <dt>Fußzeile auf diesem Tab einfügen + Text</dt>
+            <dd>Fügt am Ende des Startbildschirms einen Textstreifen hinzu. Verwendet dieselbe Hintergrund- und Textfarbe, die für die globale obere Leiste konfiguriert sind, und wird immer in 13px angezeigt.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sub-block" id="tab-analytics">
+        <h3>Analytics-Tabs</h3>
+        <p class="group-intro">Inhalts-Tabs: eigener Titel, Navigation zwischen Tabs, sowie eine oder mehrere Zeilen mit Qlik-Objekten.</p>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Hintergrundfarbe des Tabs</dt>
+            <dd>Hintergrund des gesamten Tabs, einschließlich des Titel-/Pfeil-Streifens direkt unter der globalen Kopfzeile (dieser Streifen hat keine eigene Farbe: Er übernimmt immer die Farbe des Tabs).</dd>
+            <dt>Untertitel</dt>
+            <dd>Zweite Zeile in hellem Grau und kleinerer Schrift unter dem Namen des Tabs.</dd>
+            <dt>Eine andere App-ID als die globale verwenden</dt>
+            <dd>Erlaubt diesem bestimmten Tab, eine andere Qlik-App zu verwenden als die unter „App &amp; Authentifizierung" konfigurierte.</dd>
+            <dt>Symbol für vorherigen / nächsten Tab</dt>
+            <dd>Die Pfeile <code>&lt;</code> <code>&gt;</code> neben dem Titel, um sich der Reihe nach zwischen Tabs zu bewegen.</dd>
+            <dt>Farbe von Titel und Navigationspfeilen</dt>
+            <dd>Eine einzige Farbe, die vom Namen des Tabs und von den Pfeilen <code>&lt;</code> <code>&gt;</code> gemeinsam genutzt wird.</dd>
+            <dt>Abstand zwischen Zeilen</dt>
+            <dd>Vertikaler Abstand in Pixeln zwischen den verschiedenen Objektzeilen dieses Tabs. Bereich: <span class="default">5–30px</span>, Standard <span class="default">15px</span>.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sub-block" id="tab-rows">
+        <h3>Zeilen &amp; Objekte</h3>
+        <p class="group-intro">Der Inhalt eines Analytics-Tabs ist in <b>Zeilen</b> gegliedert; jede Zeile enthält eines oder mehrere Qlik-<b>Objekte</b>.</p>
+        <div class="feature-card">
+          <h3 style="margin-top:0;">Zeile</h3>
+          <dl class="feature-list">
+            <dt>% des Bildschirms nutzen</dt>
+            <dd>Ist diese Option aktiv, nimmt die Zeile den angegebenen Prozentsatz des verfügbaren Bildschirms ein (ohne Kopfzeile, Fußzeile oder Navigationspfeile).</dd>
+            <dt>Mindesthöhe (px)</dt>
+            <dd>Eine Höhenuntergrenze, die die Zeile immer einhält — egal ob sie einen Bildschirmprozentsatz nutzt oder sich an ihren Inhalt anpasst.</dd>
+            <dt>Breite der Objekte</dt>
+            <dd>Nicht manuell einstellbar: Objekte in derselben Zeile teilen sich die Breite immer gleichmäßig auf und bleiben in derselben Zeile nebeneinander (passen sie nicht, rutschen sie in die nächste Zeile).</dd>
+          </dl>
+          <hr class="divider" style="margin:20px 0;">
+          <h3>Objekt</h3>
+          <dl class="feature-list">
+            <dt>Object ID (Qlik)</dt>
+            <dd>Kennung des Qlik-Sense-Objekts, das über <code>qlik-embed</code> eingebettet wird.</dd>
+            <dt>Ist eine Karte oder Erweiterung</dt>
+            <dd>Ändert den Einbettungstyp von <code>analytics/chart</code> zu <code>classic/chart</code>, erforderlich für Karten und individuelle Erweiterungen.</dd>
+            <dt>Mit Rahmen + Rahmenfarbe</dt>
+            <dd>Fügt einen 1px-Rahmen um das Objekt hinzu (oder, wenn minimiert, einen farbigen Streifen links).</dd>
+            <dt>Weicher Schatten</dt>
+            <dd>Fügt einen leichten Schatten rund um das Objekt hinzu. Standardmäßig deaktiviert.</dd>
+            <dt>Hintergrundfarbe des Objekts</dt>
+            <dd>Hintergrundfarbe der Karte, die das Objekt enthält (oder des Menüs, wenn minimiert). Sobald es auf Vollbild erweitert ist, verwendet das Objekt das in Qlik definierte Design, ohne diese Hintergrundfarbe.</dd>
+            <dt>Auf Vollbild erweiterbar</dt>
+            <dd>Zeigt ein Erweitern-Symbol über dem Objekt; beim Antippen füllt es den gesamten Bildschirm aus, außer der Kopfzeile mit dem Logo.</dd>
+            <dt>Standardmäßig minimiert</dt>
+            <dd>
+              Das Objekt wird als kompakte Karte angezeigt (Titel + Beschreibung + Pfeil) statt als Diagramm. Es gibt nur zwei mögliche Zustände: minimiert oder auf Vollbild erweitert (es gibt keinen Zwischenzustand, und die Mindesthöhe der Zeile wird ignoriert). Es nimmt immer 100 % der Breite ein, auch wenn es sich eine Zeile mit anderen Objekten teilt.
+            </dd>
+            <dt>Titel / Beschreibung (minimiert)</dt>
+            <dd>Texte der kompakten Karte. Die Beschreibung überschreitet nie 14px, selbst wenn die globale minimale Textgröße größer ist.</dd>
+            <dt>Schriftfarbe (minimiert)</dt>
+            <dd>Farbe von Titel und Beschreibung der kompakten Karte — nützlich, wenn die gewählte Hintergrundfarbe nicht gut mit der Textfarbe des Themes kontrastiert.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 4. PALETTEN -->
+    <!-- ============================================================ -->
+    <section class="block" id="palettes">
+      <h2><span class="block-num">4</span>Farbpaletten</h2>
+      <p class="intro-text">Sieben vordefinierte Farbkombinationen, die global (für neue Tabs) oder individuell je Tab angewendet werden können.</p>
+      <div class="feature-card">
+        <table class="swatches">
+          <tr><td><span class="sw" style="background:#FFFFFF;"></span><b>Qlik Clásico</b> — weißer Hintergrund, dunkler Text, grüner Qlik-Akzent. Standardvorlage.</td></tr>
+          <tr><td><span class="sw" style="background:#0F0F10;"></span><b>Editorial Oscuro</b> — fast schwarzer Hintergrund, roter Akzent.</td></tr>
+          <tr><td><span class="sw" style="background:#000000;"></span><b>Tech Neón</b> — reinschwarzer Hintergrund, neongrüner Akzent.</td></tr>
+          <tr><td><span class="sw" style="background:#F5EFE0;"></span><b>Cálido Editorial</b> — cremefarbener Hintergrund, bernsteinfarbener Akzent.</td></tr>
+          <tr><td><span class="sw" style="background:#F7F7F5;"></span><b>Claro Minimal</b> — heller Hintergrund, dunkle Details.</td></tr>
+          <tr><td><span class="sw" style="background:#0B0B0C;"></span><b>Oscuro Ámbar</b> — dunkler Hintergrund, gelber/bernsteinfarbener Akzent.</td></tr>
+          <tr><td><span class="sw" style="background:#0F1B2D;"></span><b>Azul Metálico</b> — dunkelblauer metallischer Hintergrund, helles Detail.</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 5. SPRACHEN -->
+    <!-- ============================================================ -->
+    <section class="block" id="languages">
+      <h2><span class="block-num">5</span>Sprachen</h2>
+      <p class="intro-text">Die Sprachauswahl in der oberen Leiste übersetzt die gesamte Konfigurationsoberfläche und legt außerdem die Sprache der Standardinhalte fest, die beim Erstellen neuer Tabs erzeugt werden (Name von Home, Begrüßungstitel, Titel des Filterpanels usw.).</p>
+      <div class="feature-card">
+        <div class="lang-grid">
+          <div><b>Español</b><span>es</span></div>
+          <div><b>English</b><span>en</span></div>
+          <div><b>Deutsch</b><span>de</span></div>
+          <div><b>Italiano</b><span>it</span></div>
+          <div><b>Français</b><span>fr</span></div>
+          <div><b>Português</b><span>pt</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 6. PROJEKTE -->
+    <!-- ============================================================ -->
+    <section class="block" id="projects">
+      <h2><span class="block-num">6</span>Projekte speichern &amp; laden</h2>
+      <p class="intro-text">Laufende Arbeit geht nie verloren und kann außerdem als eigenständige Datei archiviert oder geteilt werden.</p>
+      <div class="feature-card">
+        <dl class="feature-list">
+          <dt>Automatisches Speichern</dt>
+          <dd>Jede Änderung wird unauffällig im Browser gespeichert. Lädst du die Seite versehentlich neu, stellt sich das Projekt selbst wieder her (ein kurzer Hinweis bestätigt dies).</dd>
+          <dt>Projekt speichern (.json)</dt>
+          <dd>Lädt eine <code>.json</code>-Datei unter dem von dir eingegebenen Namen herunter, mit der vollständigen Konfiguration: Kopfzeile, Tabs, Zeilen, Objekte, Paletten und Sprache.</dd>
+          <dt>Projekt laden (.json)</dt>
+          <dd>Liest eine zuvor gespeicherte <code>.json</code>-Datei und baut das Projekt exakt wie zuvor wieder auf. Nützlich als benannter Kontrollpunkt, als Sicherung oder um die Arbeit in einem anderen Browser fortzusetzen.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 7. EXPORT -->
+    <!-- ============================================================ -->
+    <section class="block" id="export">
+      <h2><span class="block-num">7</span>Export</h2>
+      <p class="intro-text">Die Schaltfläche „Exportieren" erzeugt das fertige Mashup, bereit zum Hochladen auf einen Webserver oder Bucket (wie das in den Beispielen dieser Dokumentation verwendete <code>S3</code>).</p>
+      <div class="feature-card">
+        <dl class="feature-list">
+          <dt>index.html</dt>
+          <dd>Eine einzige, eigenständige Seite mit Kopfzeile, allen Tabs, den Qlik-Embed-Authentifizierungsskripten und der Navigation zwischen den Bildschirmen.</dd>
+          <dt>oauth-callback.html</dt>
+          <dd>Wird nur bei OAuth2-Authentifizierung und aktiviertem Schalter „oauth-callback.html erzeugen" erstellt. Wird zusammen mit <code>index.html</code> innerhalb von <code>mashup-export.zip</code> ausgeliefert.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <footer class="doc-footer">
+      Dokumentation für Qlik Mashup Builder erstellt. Spiegelt den Stand des Tools zum Zeitpunkt der Erstellung wider.
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>

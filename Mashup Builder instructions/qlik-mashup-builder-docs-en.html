@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Documentation — Qlik Mashup Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF; --text:#1E1E1E; --text2:#5F6368; --text3:#8A8F98;
+    --accent:#009845; --accent-dark:#00733A; --card:#F7F8FA; --border:#E5E7EB;
+    --code-bg:#EEF2EF; --radius:10px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#111314; --text:#F1F3F4; --text2:#A6ACB1; --text3:#7D8388;
+      --accent:#2ECC71; --accent-dark:#58E58C; --card:#1A1D1E; --border:#2A2E30; --code-bg:#20262320;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#111314; --text:#F1F3F4; --text2:#A6ACB1; --text3:#7D8388;
+    --accent:#2ECC71; --accent-dark:#58E58C; --card:#1A1D1E; --border:#2A2E30; --code-bg:#202623;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:16px;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  a{color:var(--accent); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  code, .prop{
+    font-family:'SF Mono',Menlo,Consolas,monospace;
+    font-size:.84em; background:var(--code-bg); color:var(--accent-dark);
+    padding:.1em .45em; border-radius:5px; white-space:nowrap;
+  }
+  .layout{display:flex; max-width:1180px; margin:0 auto;}
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    width:252px; flex-shrink:0; position:sticky; top:0; align-self:flex-start;
+    height:100vh; overflow-y:auto; padding:28px 18px 40px 24px;
+    border-right:1px solid var(--border);
+  }
+  .brand{display:flex; align-items:center; gap:9px; margin-bottom:22px;}
+  .brand-mark{
+    width:26px; height:26px; border-radius:7px; background:var(--accent);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .brand-mark svg{width:15px; height:15px;}
+  .brand-name{font-size:14px; font-weight:800; letter-spacing:-.01em;}
+  .brand-sub{font-size:11px; color:var(--text3); margin-top:1px;}
+  nav.toc{font-size:13.5px;}
+  nav.toc .grp{margin-bottom:4px;}
+  nav.toc .grp > a{
+    display:block; padding:7px 10px; border-radius:7px; font-weight:600; color:var(--text);
+  }
+  nav.toc .grp > a:hover{background:var(--card); text-decoration:none;}
+  nav.toc .sub{margin:0 0 10px 10px; padding:0;}
+  nav.toc .sub a{
+    display:block; padding:5px 10px; border-radius:7px; color:var(--text2);
+    font-weight:500; font-size:12.8px;
+  }
+  nav.toc .sub a:hover{background:var(--card); color:var(--text); text-decoration:none;}
+
+  /* ---------- Content ---------- */
+  main{flex:1; min-width:0; padding:44px 48px 120px; max-width:760px;}
+  .eyebrow{
+    font-size:12px; font-weight:700; color:var(--accent); letter-spacing:.03em; margin:0 0 8px;
+  }
+  h1{font-size:30px; font-weight:800; letter-spacing:-.01em; margin:0 0 10px; line-height:1.2;}
+  .lede{font-size:15.5px; color:var(--text2); line-height:1.65; margin:0 0 6px; max-width:62ch;}
+  .meta{font-size:12.5px; color:var(--text3); margin:18px 0 0;}
+
+  section.block{margin-top:64px; padding-top:8px; scroll-margin-top:16px;}
+  section.sub-block{margin-top:40px; scroll-margin-top:16px;}
+  .block-num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:7px; background:var(--accent);
+    color:#fff; font-size:12.5px; font-weight:800; margin-right:10px; flex-shrink:0;
+  }
+  h2{
+    font-size:22px; font-weight:800; letter-spacing:-.01em; margin:0 0 6px;
+    display:flex; align-items:center;
+  }
+  h2 + .intro-text{margin:10px 0 24px 36px; color:var(--text2); font-size:14.5px; line-height:1.65; max-width:58ch;}
+  h3{font-size:16px; font-weight:700; margin:0 0 4px; letter-spacing:-.005em;}
+  .group-intro{color:var(--text2); font-size:13.8px; line-height:1.6; margin:0 0 16px; max-width:58ch;}
+
+  .feature-card{
+    border:1px solid var(--border); border-radius:var(--radius); background:var(--card);
+    padding:18px 20px; margin-bottom:14px;
+  }
+  dl.feature-list{margin:0; padding:0;}
+  dl.feature-list dt{
+    font-weight:700; font-size:14px; color:var(--text); margin-top:14px;
+    display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;
+  }
+  dl.feature-list dt:first-child{margin-top:0;}
+  dl.feature-list dd{
+    margin:4px 0 0; color:var(--text2); font-size:13.6px; line-height:1.6; max-width:60ch;
+  }
+  .where{
+    display:inline-block; font-size:10.5px; font-weight:700; color:var(--text3);
+    border:1px solid var(--border); border-radius:5px; padding:1px 6px; white-space:nowrap;
+  }
+  .default{color:var(--text3); font-size:12.2px;}
+
+  .callout{
+    border-left:3px solid var(--accent); background:var(--card); border-radius:0 8px 8px 0;
+    padding:12px 16px; margin:18px 0; font-size:13.4px; color:var(--text2); line-height:1.6;
+  }
+  .callout strong{color:var(--text);}
+
+  table.swatches{width:100%; border-collapse:collapse; margin:4px 0 0;}
+  table.swatches td{padding:10px 0; border-bottom:1px solid var(--border); vertical-align:middle; font-size:13.6px;}
+  table.swatches tr:last-child td{border-bottom:none;}
+  .sw{
+    display:inline-block; width:34px; height:22px; border-radius:5px; border:1px solid var(--border);
+    vertical-align:middle; margin-right:12px;
+  }
+  .lang-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:8px 20px; margin-top:6px;}
+  .lang-grid div{font-size:13.6px; color:var(--text2); display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding:7px 0;}
+  .lang-grid b{color:var(--text); font-weight:600;}
+
+  hr.divider{border:none; border-top:1px solid var(--border); margin:40px 0;}
+
+  footer.doc-footer{
+    margin-top:70px; padding-top:20px; border-top:1px solid var(--border);
+    font-size:12px; color:var(--text3);
+  }
+
+  @media (max-width: 860px){
+    .sidebar{display:none;}
+    main{padding:28px 20px 90px; max-width:100%;}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></svg></span>
+      <div>
+        <div class="brand-name">Qlik Mashup Builder</div>
+        <div class="brand-sub">Reference documentation</div>
+      </div>
+    </div>
+    <nav class="toc">
+      <div class="grp"><a href="#intro">Introduction</a></div>
+
+      <div class="grp"><a href="#auth">1 · App &amp; Authentication</a></div>
+
+      <div class="grp"><a href="#header">2 · Header</a></div>
+      <div class="sub">
+        <a href="#header-nav">General navigation</a>
+        <a href="#header-logo">Logo &amp; branding</a>
+        <a href="#header-colors">Header colors</a>
+        <a href="#header-filter">Global filter panel</a>
+        <a href="#header-meta">Title, favicon &amp; CSS</a>
+      </div>
+
+      <div class="grp"><a href="#tabs">3 · Building tabs</a></div>
+      <div class="sub">
+        <a href="#tabs-common">Common concepts</a>
+        <a href="#tab-home">Home tab</a>
+        <a href="#tab-analytics">Analytics tabs</a>
+        <a href="#tab-rows">Rows &amp; objects</a>
+      </div>
+
+      <div class="grp"><a href="#palettes">4 · Color palettes</a></div>
+      <div class="grp"><a href="#languages">5 · Languages</a></div>
+      <div class="grp"><a href="#projects">6 · Saving &amp; loading projects</a></div>
+      <div class="grp"><a href="#export">7 · Export</a></div>
+    </nav>
+  </aside>
+
+  <main>
+
+    <section id="intro">
+      <p class="eyebrow">Reference documentation</p>
+      <h1>Qlik Mashup Builder</h1>
+      <p class="lede">A visual tool for designing a mobile mashup built on the Qlik Embed API, with no code required: configure the header, create welcome and analytics tabs, lay out Qlik objects in rows, and export a ready-to-deploy <code>index.html</code> (plus, when needed, an <code>oauth-callback.html</code>).</p>
+      <p class="lede">This guide explains, block by block, what each option in the configuration panel means and how it affects the exported mashup.</p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 1. APP & AUTHENTICATION -->
+    <!-- ============================================================ -->
+    <section class="block" id="auth">
+      <h2><span class="block-num">1</span>App &amp; Authentication</h2>
+      <p class="intro-text">Defines how the exported mashup connects to your Qlik Cloud environment. It's configured once and applies to every tab, unless a specific tab sets its own App ID.</p>
+
+      <div class="feature-card">
+        <dl class="feature-list">
+          <dt>App ID (default) <span class="where">global</span></dt>
+          <dd>The Qlik app used by every object in the mashup, unless an analytics tab turns on "Use a different App ID than the global one".</dd>
+
+          <dt>Authentication type</dt>
+          <dd>
+            <b>Anonymous</b>: access with no user login, meant for public or demo content.<br>
+            <b>OAuth2</b>: the user signs in with their Qlik Cloud credentials; requires a redirect URL and generates a second callback file (see below).
+          </dd>
+
+          <dt><span class="prop">data-host</span></dt>
+          <dd>URL of the Qlik Cloud tenant (for example, <code>https://mycompany.eu.qlikcloud.com</code>). Injected into the authentication script of <code>index.html</code>.</dd>
+
+          <dt><span class="prop">data-client-id</span></dt>
+          <dd>OAuth2/API client identifier registered in Qlik Cloud for this integration.</dd>
+
+          <dt><span class="prop">data-access-code</span> <span class="where">Anonymous only</span></dt>
+          <dd>Access code that enables anonymous viewing of the app.</dd>
+
+          <dt><span class="prop">data-redirect-uri</span> <span class="where">OAuth2 only</span></dt>
+          <dd>The URL Qlik redirects to after login — normally wherever you publish <code>oauth-callback.html</code>.</dd>
+
+          <dt>Generate oauth-callback.html</dt>
+          <dd>
+            Switch visible only with OAuth2 authentication. When on, clicking "Export" also includes the <code>oauth-callback.html</code> file, required to complete the login flow.
+            <div class="callout">Because browsers block a second automatic download, both files are delivered together inside a single <code>mashup-export.zip</code> (<code>index.html</code> + <code>oauth-callback.html</code>).</div>
+          </dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 2. HEADER -->
+    <!-- ============================================================ -->
+    <section class="block" id="header">
+      <h2><span class="block-num">2</span>Header</h2>
+      <p class="intro-text">The header is the fixed top strip of the mashup — logo, filters, information — plus the system used to navigate between tabs. Its settings are <b>global</b>: they apply the same way to every tab.</p>
+
+      <div class="sub-block" id="header-nav">
+        <h3>General navigation</h3>
+        <p class="group-intro">How the user moves between tabs.</p>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Bottom navigation</dt>
+            <dd>Fixed bar at the bottom with one button per tab (icon + name). The active tab's icon is highlighted using the "Navigation icons color".</dd>
+            <dt>Hidden top panel</dt>
+            <dd>Instead of a fixed footer, a menu icon (☰) appears top-left, before the logo. Tapping it opens a dark side panel listing every tab.</dd>
+            <dt>General font</dt>
+            <dd>Typeface used throughout the exported mashup (Inter, System, Georgia, Monospace, Poppins or Playfair Display).</dd>
+            <dt>Minimum text size</dt>
+            <dd>No text in the mashup ever renders below this size, even if the original design called for something smaller. Protects legibility on small screens. Default: <span class="default">15px</span>.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sub-block" id="header-logo">
+        <h3>Logo &amp; branding</h3>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Logo position</dt>
+            <dd>Left, center or right within the top bar.</dd>
+            <dt>Logo</dt>
+            <dd>Image (URL or uploaded file) shown next to the before/after text.</dd>
+            <dt>Additional header image</dt>
+            <dd>A second small icon/image placed on the side opposite the logo.</dd>
+            <dt>Text before logo / Text after logo</dt>
+            <dd>Text labels on either side of the logo image (for example, the company name).</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sub-block" id="header-colors">
+        <h3>Header colors</h3>
+        <p class="group-intro">There are two independent color levels: the global top bar, and the color of the navigation icons (footer or menu).</p>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Top bar background color</dt>
+            <dd>Background of the fixed strip that holds the logo, the filter icon and the info icon.</dd>
+            <dt>Top bar text &amp; icon color</dt>
+            <dd>Applied to the logo text and, by inheritance, to every icon in that bar (menu, filter, info).</dd>
+            <dt>Navigation icons color</dt>
+            <dd>Color of the active tab's icon (and its text, in the footer) within the bottom navigation or the side menu.</dd>
+            <dt>Active icon color</dt>
+            <dd>Background color behind the active tab's icon inside the side menu panel (the icon itself is drawn on top of it), to guarantee enough contrast against the inactive icons.</dd>
+            <dt>Default background color for objects</dt>
+            <dd>Color automatically applied to any Qlik object you create from now on (in any analytics tab). Each object can still override it individually afterwards.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sub-block" id="header-filter">
+        <h3>Global filter panel</h3>
+        <p class="group-intro">A single filter panel, shared by every analytics tab (it never appears on Home).</p>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Filter panel icon</dt>
+            <dd>Turns on the filter icon in the header. Tapping it opens a right-hand drawer with the Qlik selections object.</dd>
+            <dt>Selections object ID</dt>
+            <dd>Qlik Object ID displayed inside the filter panel (type <code>analytics/chart</code>).</dd>
+            <dt>Filter panel width</dt>
+            <dd>Width of the filter drawer, in pixels. Allowed range: <span class="default">200–500px</span>, default <span class="default">290px</span>.</dd>
+            <dt>Filter panel buttons (up to 3)</dt>
+            <dd>Optional Qlik button object IDs shown right in the header, to the left of the filter icon (not inside the drawer), at the same size as that icon.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sub-block" id="header-meta">
+        <h3>Title, favicon &amp; external CSS</h3>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Page title (<code>&lt;title&gt;</code>)</dt>
+            <dd>Text shown in the browser tab and in bookmarks. If left blank, the export defaults to "Qlik Mashup".</dd>
+            <dt>Favicon (URL)</dt>
+            <dd>When filled in, adds a <code>&lt;link rel="shortcut icon"&gt;</code> to <code>index.html</code> pointing at that URL.</dd>
+            <dt>Import external CSS (URL)</dt>
+            <dd>Adds an extra stylesheet to the export's <code>&lt;head&gt;</code> via a <code>&lt;link rel="stylesheet"&gt;</code>, to override or extend styles.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 3. BUILDING TABS -->
+    <!-- ============================================================ -->
+    <section class="block" id="tabs">
+      <h2><span class="block-num">3</span>Building tabs</h2>
+      <p class="intro-text">A mashup is made up of two kinds of tabs: <b>Home</b> (welcome) and <b>Analytics</b> (analytical content). Each tab is independent and has its own configuration panel.</p>
+
+      <div class="sub-block" id="tabs-common">
+        <h3>Concepts common to every tab</h3>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Information icon</dt>
+            <dd>Turns on an "i" icon in the header for this tab. Tapping it shows an "About this app" popup with the text you write. URLs and email addresses inside that text are detected and colored automatically; line breaks are kept as separate paragraphs.</dd>
+            <dt>This tab's icon in the footer / menu</dt>
+            <dd>Icon (chosen from a catalog of 15) representing the tab in the bottom navigation or the side menu.</dd>
+            <dt>This tab's palette</dt>
+            <dd>Applies one of the 7 color presets (see section 4) to the whole tab: background, cards, borders and accents.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sub-block" id="tab-home">
+        <h3>Home tab (welcome)</h3>
+        <p class="group-intro">The mashup's first screen: a header image or video with a title, plus quick links to the other tabs.</p>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Background color</dt>
+            <dd>This tab's own background color, independent from the rest.</dd>
+            <dt>Media type / URL</dt>
+            <dd>Background image or video in the top ("hero") area. Video is centered and cropped to fill the space without covering the header.</dd>
+            <dt>Block height</dt>
+            <dd>Percentage of the screen taken up by the header image/video.</dd>
+            <dt>Title / Subtitle</dt>
+            <dd>Main text overlaid on the header image.</dd>
+            <dt>Text position</dt>
+            <dd>Where the title+subtitle block sits over the image: top, center or bottom, left-aligned or centered.</dd>
+            <dt>Extra text (optional) + color</dt>
+            <dd>An additional text block (for example, a descriptive caption), with its own configurable color.</dd>
+            <dt>Show extra text over the photo</dt>
+            <dd>Switch: when on, the extra text appears inside the header/photo (next to the title); when off, it appears below, outside the image.</dd>
+            <dt>Numbered shortcut cards to tabs</dt>
+            <dd>A list of cards (01, 02, 03…) linking directly to each of the mashup's other tabs.</dd>
+            <dt>Icon to go to the next tab</dt>
+            <dd>Arrow over the header image that navigates to the next tab.</dd>
+            <dt>Include a footer on this tab + text</dt>
+            <dd>Adds a text strip at the bottom of the welcome screen. It uses the same background and text color configured for the global top bar, and is always shown at 13px.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sub-block" id="tab-analytics">
+        <h3>Analytics tabs</h3>
+        <p class="group-intro">Content tabs: their own title, navigation between tabs, and one or more rows of Qlik objects.</p>
+        <div class="feature-card">
+          <dl class="feature-list">
+            <dt>Tab background color</dt>
+            <dd>Background of the whole tab, including the title/arrows strip right below the global header (that strip has no color of its own: it always takes the tab's color).</dd>
+            <dt>Subtitle</dt>
+            <dd>Secondary line, in light gray and a smaller size, under the tab's name.</dd>
+            <dt>Use a different App ID than the global one</dt>
+            <dd>Lets this specific tab use a Qlik app different from the one set in "App &amp; Authentication".</dd>
+            <dt>Icon to go to previous / next tab</dt>
+            <dd>The <code>&lt;</code> <code>&gt;</code> arrows next to the title, for moving between tabs in order.</dd>
+            <dt>Title &amp; navigation arrows color</dt>
+            <dd>A single color shared by the tab's name and by the <code>&lt;</code> <code>&gt;</code> arrows.</dd>
+            <dt>Spacing between rows</dt>
+            <dd>Vertical space, in pixels, between this tab's rows of objects. Range: <span class="default">5–30px</span>, default <span class="default">15px</span>.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sub-block" id="tab-rows">
+        <h3>Rows &amp; objects</h3>
+        <p class="group-intro">An Analytics tab's content is organized into <b>rows</b>; each row holds one or more Qlik <b>objects</b>.</p>
+        <div class="feature-card">
+          <h3 style="margin-top:0;">Row</h3>
+          <dl class="feature-list">
+            <dt>Use % of the screen</dt>
+            <dd>When on, the row takes up the given percentage of the available screen (not counting the header, footer or navigation arrows).</dd>
+            <dt>Minimum height (px)</dt>
+            <dd>A height floor the row always respects, whether it's using a screen percentage or growing to fit its content.</dd>
+            <dt>Object width</dt>
+            <dd>Not manually configurable: objects in the same row always split the width equally, and stay side by side on the same line (if they don't fit, they wrap to the next line).</dd>
+          </dl>
+          <hr class="divider" style="margin:20px 0;">
+          <h3>Object</h3>
+          <dl class="feature-list">
+            <dt>Object ID (Qlik)</dt>
+            <dd>Identifier of the Qlik Sense object embedded via <code>qlik-embed</code>.</dd>
+            <dt>Is a map or extension</dt>
+            <dd>Switches the embed type from <code>analytics/chart</code> to <code>classic/chart</code>, required for maps and custom extensions.</dd>
+            <dt>With border + border color</dt>
+            <dd>Adds a 1px border around the object (or a colored stripe on the left, if minimized).</dd>
+            <dt>Soft shadow</dt>
+            <dd>Adds a light shadow around the object. Off by default.</dd>
+            <dt>Object background color</dt>
+            <dd>Background color of the card holding the object (or of the menu, if minimized). Once expanded to full screen, the object uses the design defined in Qlik, without this background color.</dd>
+            <dt>Expandable to full screen</dt>
+            <dd>Shows an expand icon over the object; tapping it makes it fill the whole screen except the header with the logo.</dd>
+            <dt>Minimized by default</dt>
+            <dd>
+              The object is shown as a compact card (title + description + arrow), instead of as a chart. It only has two possible states: minimized or expanded to full screen (there is no in-between state, and it ignores the row's minimum height). It always takes 100% of the width, even if it shares a row with other objects.
+            </dd>
+            <dt>Title / Description (minimized)</dt>
+            <dd>Text shown on the compact card. The description never exceeds 14px, even if the global minimum text size is larger.</dd>
+            <dt>Font color (minimized)</dt>
+            <dd>Color of the title and description on the compact card — useful when the chosen background color doesn't contrast well with the theme's text color.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 4. PALETTES -->
+    <!-- ============================================================ -->
+    <section class="block" id="palettes">
+      <h2><span class="block-num">4</span>Color palettes</h2>
+      <p class="intro-text">Seven predefined color combinations, applicable globally (for new tabs) or individually, per tab.</p>
+      <div class="feature-card">
+        <table class="swatches">
+          <tr><td><span class="sw" style="background:#FFFFFF;"></span><b>Qlik Clásico</b> — white background, dark text, Qlik green accent. Default preset.</td></tr>
+          <tr><td><span class="sw" style="background:#0F0F10;"></span><b>Editorial Oscuro</b> — near-black background, red accent.</td></tr>
+          <tr><td><span class="sw" style="background:#000000;"></span><b>Tech Neón</b> — pure black background, neon green accent.</td></tr>
+          <tr><td><span class="sw" style="background:#F5EFE0;"></span><b>Cálido Editorial</b> — cream background, amber accent.</td></tr>
+          <tr><td><span class="sw" style="background:#F7F7F5;"></span><b>Claro Minimal</b> — light background, dark details.</td></tr>
+          <tr><td><span class="sw" style="background:#0B0B0C;"></span><b>Oscuro Ámbar</b> — dark background, yellow/amber accent.</td></tr>
+          <tr><td><span class="sw" style="background:#0F1B2D;"></span><b>Azul Metálico</b> — dark metallic blue background, light detail.</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 5. LANGUAGES -->
+    <!-- ============================================================ -->
+    <section class="block" id="languages">
+      <h2><span class="block-num">5</span>Languages</h2>
+      <p class="intro-text">The language selector in the top bar translates the whole configuration interface, and also sets the language of the default content generated when creating new tabs (the Home name, the welcome title, the filter panel title, and so on).</p>
+      <div class="feature-card">
+        <div class="lang-grid">
+          <div><b>Español</b><span>es</span></div>
+          <div><b>English</b><span>en</span></div>
+          <div><b>Deutsch</b><span>de</span></div>
+          <div><b>Italiano</b><span>it</span></div>
+          <div><b>Français</b><span>fr</span></div>
+          <div><b>Português</b><span>pt</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 6. PROJECTS -->
+    <!-- ============================================================ -->
+    <section class="block" id="projects">
+      <h2><span class="block-num">6</span>Saving &amp; loading projects</h2>
+      <p class="intro-text">Work in progress is never lost, and can also be archived or shared as a standalone file.</p>
+      <div class="feature-card">
+        <dl class="feature-list">
+          <dt>Autosave</dt>
+          <dd>Every change is saved silently in the browser. If you accidentally reload the page, the project restores itself (you'll see a brief notice confirming it).</dd>
+          <dt>Save project (.json)</dt>
+          <dd>Downloads a <code>.json</code> file, under whatever name you type, with the full configuration: header, tabs, rows, objects, palettes and language.</dd>
+          <dt>Load project (.json)</dt>
+          <dd>Reads a previously saved <code>.json</code> file and rebuilds the project exactly as it was. Useful as a named checkpoint, as a backup, or to carry on the work in a different browser.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 7. EXPORT -->
+    <!-- ============================================================ -->
+    <section class="block" id="export">
+      <h2><span class="block-num">7</span>Export</h2>
+      <p class="intro-text">The "Export" button generates the final mashup, ready to upload to a web server or bucket (such as the <code>S3</code> used in this documentation's examples).</p>
+      <div class="feature-card">
+        <dl class="feature-list">
+          <dt>index.html</dt>
+          <dd>A single, self-contained page with the header, every tab, the Qlik Embed authentication scripts, and navigation between screens.</dd>
+          <dt>oauth-callback.html</dt>
+          <dd>Generated only with OAuth2 authentication and the "Generate oauth-callback.html" switch on. Delivered together with <code>index.html</code> inside <code>mashup-export.zip</code>.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <footer class="doc-footer">
+      Documentation generated for Qlik Mashup Builder. Reflects the state of the tool at the time it was generated.
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>
