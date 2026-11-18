@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext, createContext } from 'r
 import {
   Menu, ChevronLeft, ChevronRight, Filter, Info, Maximize2, Plus, Trash2,
   Download, ArrowUp, ArrowDown, Smartphone,
-  RotateCw, Settings, ChevronDown, Layers, Globe, X, Save, Upload, RefreshCw
+  RotateCw, Settings, ChevronDown, Layers, Globe, X, Save, Upload, RefreshCw, Sparkles
 } from 'lucide-react';
 
 const AUTOSAVE_KEY = 'qlik-mashup-builder:autosave-v1';
@@ -92,12 +92,15 @@ const I18N = {
     defaultObjectBgLabel: 'Color de fondo por defecto de los objetos', filterPanelWidthLabel: 'Anchura del panel de filtros', filterButtonsNote: 'Los botones aparecen en la cabecera, a la izquierda del icono de filtros, en todas las pestañas excepto Home.',
     minimizedTextColorLabel: 'Color de la fuente (minimizado)', generateOauthCallbackLabel: 'Generar oauth-callback.html', aboutAppTitle: 'Sobre esta app',
     headerTextColorLabel: 'Color de texto e iconos de la cabecera superior', extraTextOverPhotoToggle: 'Mostrar el texto extra sobre la foto', extraTextColorLabel: 'Color del texto extra',
+    welcomeTitleColorLabel: 'Color del título y subtítulo', infoTextColorLabel: 'Color del texto del popup de información',
     titleColorLabel: 'Color del título y flechas de navegación', rowGapLabel: 'Separación entre filas', topBarBgColorLabel: 'Color de fondo de la cabecera superior',
     welcomeFooterToggle: 'Incluir pie en esta pestaña', welcomeFooterTextLabel: 'Texto del pie', hiddenMenuTitle: 'Menú', navHiddenTopStyleImproved: '',
     oauthZipNote: 'Se descargará como mashup-export.zip (index.html + oauth-callback.html), ya que los navegadores bloquean una segunda descarga automática.',
     homeTabDefaultName: 'Inicio', welcomeDefaultTitle: 'Bienvenido', welcomeDefaultSubtitle: 'Explora tus datos desde el móvil', newTabDefaultName: 'Nueva pestaña', tabDefaultNamePrefix: 'Pestaña',
     objectShadowToggle: 'Sombra suave',
     activeIconColorLabel: 'Color del icono activo', pageTitleLabel: 'Título de la página (title)', faviconLabel: 'Favicon (URL)', importCssLabel: 'Importar CSS externo (URL)',
+    qlikAnswersToggle: 'Asistente de Qlik Answers (en la cabecera)', qlikAnswersAssistantIdLabel: 'ID del asistente (assistant-id)', qlikAnswersPositionLabel: 'Posición del icono del asistente',
+    qlikAnswersPanelTitle: 'Asistente Qlik Answers', qlikAnswersPlaceholder: 'Añade el ID del asistente en la configuración para ver el chat aquí.',
     saveProjectLabel: 'Guardar proyecto (.json)', loadProjectLabel: 'Cargar proyecto (.json)', projectNamePlaceholder: 'nombre-proyecto',
     projectLoadedNote: 'Proyecto cargado correctamente.', projectLoadErrorNote: 'No se pudo leer el archivo: no es un proyecto válido.',
     autosaveRestoredNote: 'Se restauró tu proyecto guardado automáticamente.',
@@ -154,12 +157,15 @@ const I18N = {
     defaultObjectBgLabel: 'Default background color for objects', filterPanelWidthLabel: 'Filter panel width', filterButtonsNote: 'The buttons appear in the header, to the left of the filter icon, on every tab except Home.',
     minimizedTextColorLabel: 'Font color (minimized)', generateOauthCallbackLabel: 'Generate oauth-callback.html', aboutAppTitle: 'About this app',
     headerTextColorLabel: 'Top bar text & icon color', extraTextOverPhotoToggle: 'Show extra text over the photo', extraTextColorLabel: 'Extra text color',
+    welcomeTitleColorLabel: 'Title and subtitle color', infoTextColorLabel: 'Info popup text color',
     titleColorLabel: 'Title & navigation arrows color', rowGapLabel: 'Spacing between rows', topBarBgColorLabel: 'Top bar background color',
     welcomeFooterToggle: 'Include a footer on this tab', welcomeFooterTextLabel: 'Footer text', hiddenMenuTitle: 'Menu', navHiddenTopStyleImproved: '',
     oauthZipNote: 'It will download as mashup-export.zip (index.html + oauth-callback.html), since browsers block a second automatic download.',
     homeTabDefaultName: 'Home', welcomeDefaultTitle: 'Welcome', welcomeDefaultSubtitle: 'Explore your data from your mobile', newTabDefaultName: 'New tab', tabDefaultNamePrefix: 'Tab',
     objectShadowToggle: 'Soft shadow',
     activeIconColorLabel: 'Active icon color', pageTitleLabel: 'Page title (<title>)', faviconLabel: 'Favicon (URL)', importCssLabel: 'Import external CSS (URL)',
+    qlikAnswersToggle: 'Qlik Answers assistant (in the header)', qlikAnswersAssistantIdLabel: 'Assistant ID (assistant-id)', qlikAnswersPositionLabel: 'Assistant icon position',
+    qlikAnswersPanelTitle: 'Qlik Answers assistant', qlikAnswersPlaceholder: 'Add the assistant ID in the settings to see the chat here.',
     saveProjectLabel: 'Save project (.json)', loadProjectLabel: 'Load project (.json)', projectNamePlaceholder: 'project-name',
     projectLoadedNote: 'Project loaded successfully.', projectLoadErrorNote: 'Could not read the file: not a valid project.',
     autosaveRestoredNote: 'Your saved project was restored automatically.',
@@ -216,12 +222,15 @@ const I18N = {
     defaultObjectBgLabel: 'Standardhintergrundfarbe der Objekte', filterPanelWidthLabel: 'Breite des Filterpanels', filterButtonsNote: 'Die Schaltflächen erscheinen in der Kopfzeile, links vom Filtersymbol, auf allen Tabs außer Home.',
     minimizedTextColorLabel: 'Schriftfarbe (minimiert)', generateOauthCallbackLabel: 'oauth-callback.html erzeugen', aboutAppTitle: 'Über diese App',
     headerTextColorLabel: 'Text- und Symbolfarbe der oberen Leiste', extraTextOverPhotoToggle: 'Zusätzlichen Text über dem Foto anzeigen', extraTextColorLabel: 'Farbe des zusätzlichen Textes',
+    welcomeTitleColorLabel: 'Farbe von Titel und Untertitel', infoTextColorLabel: 'Textfarbe des Info-Popups',
     titleColorLabel: 'Farbe von Titel und Navigationspfeilen', rowGapLabel: 'Abstand zwischen Zeilen', topBarBgColorLabel: 'Hintergrundfarbe der oberen Leiste',
     welcomeFooterToggle: 'Fußzeile auf diesem Tab einfügen', welcomeFooterTextLabel: 'Text der Fußzeile', hiddenMenuTitle: 'Menü', navHiddenTopStyleImproved: '',
     oauthZipNote: 'Wird als mashup-export.zip heruntergeladen (index.html + oauth-callback.html), da Browser einen zweiten automatischen Download blockieren.',
     homeTabDefaultName: 'Start', welcomeDefaultTitle: 'Willkommen', welcomeDefaultSubtitle: 'Entdecke deine Daten mobil', newTabDefaultName: 'Neuer Tab', tabDefaultNamePrefix: 'Tab',
     objectShadowToggle: 'Weicher Schatten',
     activeIconColorLabel: 'Farbe des aktiven Symbols', pageTitleLabel: 'Seitentitel (<title>)', faviconLabel: 'Favicon (URL)', importCssLabel: 'Externes CSS importieren (URL)',
+    qlikAnswersToggle: 'Qlik-Answers-Assistent (in der Kopfzeile)', qlikAnswersAssistantIdLabel: 'Assistenten-ID (assistant-id)', qlikAnswersPositionLabel: 'Position des Assistenten-Symbols',
+    qlikAnswersPanelTitle: 'Qlik-Answers-Assistent', qlikAnswersPlaceholder: 'Fügen Sie die Assistenten-ID in den Einstellungen hinzu, um den Chat hier zu sehen.',
     saveProjectLabel: 'Projekt speichern (.json)', loadProjectLabel: 'Projekt laden (.json)', projectNamePlaceholder: 'projektname',
     projectLoadedNote: 'Projekt erfolgreich geladen.', projectLoadErrorNote: 'Datei konnte nicht gelesen werden: kein gültiges Projekt.',
     autosaveRestoredNote: 'Ihr gespeichertes Projekt wurde automatisch wiederhergestellt.',
@@ -278,12 +287,15 @@ const I18N = {
     defaultObjectBgLabel: 'Colore di sfondo predefinito degli oggetti', filterPanelWidthLabel: 'Larghezza del pannello filtri', filterButtonsNote: 'I pulsanti appaiono nell\'intestazione, a sinistra dell\'icona filtri, in tutte le schede tranne Home.',
     minimizedTextColorLabel: 'Colore del testo (minimizzato)', generateOauthCallbackLabel: 'Genera oauth-callback.html', aboutAppTitle: 'Informazioni su questa app',
     headerTextColorLabel: "Colore del testo e delle icone della barra superiore", extraTextOverPhotoToggle: "Mostra il testo extra sopra la foto", extraTextColorLabel: 'Colore del testo extra',
+    welcomeTitleColorLabel: 'Colore di titolo e sottotitolo', infoTextColorLabel: 'Colore del testo del popup informativo',
     titleColorLabel: 'Colore del titolo e delle freccette di navigazione', rowGapLabel: 'Spaziatura tra le righe', topBarBgColorLabel: 'Colore di sfondo della barra superiore',
     welcomeFooterToggle: 'Includi un piè di pagina in questa scheda', welcomeFooterTextLabel: 'Testo del piè di pagina', hiddenMenuTitle: 'Menu', navHiddenTopStyleImproved: '',
     oauthZipNote: 'Verrà scaricato come mashup-export.zip (index.html + oauth-callback.html), poiché i browser bloccano un secondo download automatico.',
     homeTabDefaultName: 'Home', welcomeDefaultTitle: 'Benvenuto', welcomeDefaultSubtitle: 'Esplora i tuoi dati da mobile', newTabDefaultName: 'Nuova scheda', tabDefaultNamePrefix: 'Scheda',
     objectShadowToggle: 'Ombra leggera',
     activeIconColorLabel: "Colore dell'icona attiva", pageTitleLabel: 'Titolo della pagina (<title>)', faviconLabel: 'Favicon (URL)', importCssLabel: 'Importa CSS esterno (URL)',
+    qlikAnswersToggle: "Assistente Qlik Answers (nell'intestazione)", qlikAnswersAssistantIdLabel: "ID dell'assistente (assistant-id)", qlikAnswersPositionLabel: "Posizione dell'icona dell'assistente",
+    qlikAnswersPanelTitle: 'Assistente Qlik Answers', qlikAnswersPlaceholder: "Aggiungi l'ID dell'assistente nelle impostazioni per vedere la chat qui.",
     saveProjectLabel: 'Salva progetto (.json)', loadProjectLabel: 'Carica progetto (.json)', projectNamePlaceholder: 'nome-progetto',
     projectLoadedNote: 'Progetto caricato correttamente.', projectLoadErrorNote: 'Impossibile leggere il file: non è un progetto valido.',
     autosaveRestoredNote: 'Il tuo progetto salvato è stato ripristinato automaticamente.',
@@ -340,12 +352,15 @@ const I18N = {
     defaultObjectBgLabel: 'Couleur de fond par défaut des objets', filterPanelWidthLabel: 'Largeur du panneau de filtres', filterButtonsNote: "Les boutons apparaissent dans l'en-tête, à gauche de l'icône de filtres, sur tous les onglets sauf Home.",
     minimizedTextColorLabel: 'Couleur de la police (réduit)', generateOauthCallbackLabel: 'Générer oauth-callback.html', aboutAppTitle: 'À propos de cette application',
     headerTextColorLabel: "Couleur du texte et des icônes de la barre supérieure", extraTextOverPhotoToggle: "Afficher le texte supplémentaire sur la photo", extraTextColorLabel: 'Couleur du texte supplémentaire',
+    welcomeTitleColorLabel: 'Couleur du titre et du sous-titre', infoTextColorLabel: "Couleur du texte de la popup d'information",
     titleColorLabel: 'Couleur du titre et des flèches de navigation', rowGapLabel: 'Espacement entre les lignes', topBarBgColorLabel: "Couleur de fond de la barre supérieure",
     welcomeFooterToggle: 'Inclure un pied de page sur cet onglet', welcomeFooterTextLabel: 'Texte du pied de page', hiddenMenuTitle: 'Menu', navHiddenTopStyleImproved: '',
     oauthZipNote: "Le fichier sera téléchargé sous forme de mashup-export.zip (index.html + oauth-callback.html), car les navigateurs bloquent un second téléchargement automatique.",
     homeTabDefaultName: 'Accueil', welcomeDefaultTitle: 'Bienvenue', welcomeDefaultSubtitle: 'Explorez vos données depuis votre mobile', newTabDefaultName: 'Nouvel onglet', tabDefaultNamePrefix: 'Onglet',
     objectShadowToggle: 'Ombre douce',
     activeIconColorLabel: "Couleur de l'icône active", pageTitleLabel: 'Titre de la page (<title>)', faviconLabel: 'Favicon (URL)', importCssLabel: 'Importer un CSS externe (URL)',
+    qlikAnswersToggle: "Assistant Qlik Answers (dans l'en-tête)", qlikAnswersAssistantIdLabel: "ID de l'assistant (assistant-id)", qlikAnswersPositionLabel: "Position de l'icône de l'assistant",
+    qlikAnswersPanelTitle: 'Assistant Qlik Answers', qlikAnswersPlaceholder: "Ajoutez l'ID de l'assistant dans les paramètres pour voir le chat ici.",
     saveProjectLabel: 'Enregistrer le projet (.json)', loadProjectLabel: 'Charger le projet (.json)', projectNamePlaceholder: 'nom-du-projet',
     projectLoadedNote: 'Projet chargé avec succès.', projectLoadErrorNote: "Impossible de lire le fichier : ce n'est pas un projet valide.",
     autosaveRestoredNote: 'Votre projet enregistré a été restauré automatiquement.',
@@ -402,12 +417,15 @@ const I18N = {
     defaultObjectBgLabel: 'Cor de fundo padrão dos objetos', filterPanelWidthLabel: 'Largura do painel de filtros', filterButtonsNote: 'Os botões aparecem no cabeçalho, à esquerda do ícone de filtros, em todas as abas exceto Home.',
     minimizedTextColorLabel: 'Cor da fonte (minimizado)', generateOauthCallbackLabel: 'Gerar oauth-callback.html', aboutAppTitle: 'Sobre esta app',
     headerTextColorLabel: 'Cor do texto e dos ícones da barra superior', extraTextOverPhotoToggle: 'Mostrar o texto extra sobre a foto', extraTextColorLabel: 'Cor do texto extra',
+    welcomeTitleColorLabel: 'Cor do título e subtítulo', infoTextColorLabel: 'Cor do texto do popup de informação',
     titleColorLabel: 'Cor do título e das flechas de navegação', rowGapLabel: 'Espaçamento entre linhas', topBarBgColorLabel: 'Cor de fundo da barra superior',
     welcomeFooterToggle: 'Incluir pé de página nesta aba', welcomeFooterTextLabel: 'Texto do pé de página', hiddenMenuTitle: 'Menu', navHiddenTopStyleImproved: '',
     oauthZipNote: 'Será descarregado como mashup-export.zip (index.html + oauth-callback.html), já que os navegadores bloqueiam uma segunda descarga automática.',
     homeTabDefaultName: 'Início', welcomeDefaultTitle: 'Bem-vindo', welcomeDefaultSubtitle: 'Explora os teus dados a partir do telemóvel', newTabDefaultName: 'Nova aba', tabDefaultNamePrefix: 'Aba',
     objectShadowToggle: 'Sombra suave',
     activeIconColorLabel: 'Cor do ícone ativo', pageTitleLabel: 'Título da página (<title>)', faviconLabel: 'Favicon (URL)', importCssLabel: 'Importar CSS externo (URL)',
+    qlikAnswersToggle: 'Assistente Qlik Answers (no cabeçalho)', qlikAnswersAssistantIdLabel: 'ID do assistente (assistant-id)', qlikAnswersPositionLabel: 'Posição do ícone do assistente',
+    qlikAnswersPanelTitle: 'Assistente Qlik Answers', qlikAnswersPlaceholder: 'Adicione o ID do assistente nas configurações para ver o chat aqui.',
     saveProjectLabel: 'Guardar projeto (.json)', loadProjectLabel: 'Carregar projeto (.json)', projectNamePlaceholder: 'nome-do-projeto',
     projectLoadedNote: 'Projeto carregado com sucesso.', projectLoadErrorNote: 'Não foi possível ler o ficheiro: não é um projeto válido.',
     autosaveRestoredNote: 'O teu projeto guardado foi restaurado automaticamente.',
@@ -473,6 +491,7 @@ const NEXT_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" st
 const MENU_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
 const INFO_SVG = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
 const FILTER_SVG = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>';
+const ASSISTANT_SVG = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.937A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.582a.5.5 0 0 1 0 .962L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.962 0z"/></svg>';
 const PREV_SVG = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>';
 const NEXT_SVG_DARK = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg>';
 
@@ -485,12 +504,12 @@ function iconSvg(key, size = 16) {
 // ---------------------------------------------------------------------------
 // DEFAULT DATA
 // ---------------------------------------------------------------------------
-function defaultHeaderCfg() { return { navStyle: 'footer', logoUrl: '', logoPosition: 'left', extraImageUrl: '', textBefore: '', textAfter: '', bgColor: '#FFFFFF', textColor: '#1E1E1E', activeIconBgColor: '#FFFFFF', fontKey: 'inter', minFontSize: 15, defaultObjectBgColor: '#F7F8FA', footerIconColor: '#009845', filterEnabled: false, filterObjectId: '', filterButtons: ['', '', ''], filterPanelWidth: 290, pageTitle: '', faviconUrl: '', importCssUrl: '' }; }
-function defaultInfo() { return { enabled: false, text: '' }; }
+function defaultHeaderCfg() { return { navStyle: 'footer', logoUrl: '', logoPosition: 'left', extraImageUrl: '', textBefore: '', textAfter: '', bgColor: '#FFFFFF', textColor: '#1E1E1E', activeIconBgColor: '#FFFFFF', fontKey: 'inter', minFontSize: 15, defaultObjectBgColor: '#F7F8FA', footerIconColor: '#009845', filterEnabled: false, filterObjectId: '', filterButtons: ['', '', ''], filterPanelWidth: 290, pageTitle: '', faviconUrl: '', importCssUrl: '', qlikAnswersEnabled: false, qlikAnswersAssistantId: '', qlikAnswersPosition: 'right' }; }
+function defaultInfo() { return { enabled: false, text: '', textColor: '' }; }
 function defaultWelcome(t, preset) {
   const title = t ? t('welcomeDefaultTitle') : 'Bienvenido';
   const subtitle = t ? t('welcomeDefaultSubtitle') : 'Explora tus datos desde el móvil';
-  return { mediaType: 'image', mediaUrl: '', mediaHeightPct: 55, title, subtitle, titlePosition: 'bottom-left', showShortcutCards: true, extraText: '', extraTextOverPhoto: false, extraTextColor: preset ? preset.text : '#1E1E1E', nextIcon: true, comments: '', bgColor: preset ? preset.bg : '#FFFFFF', showFooter: false, footerText: '' };
+  return { mediaType: 'image', mediaUrl: '', mediaHeightPct: 55, title, subtitle, titleColor: preset ? preset.text : '#1E1E1E', titlePosition: 'bottom-left', showShortcutCards: true, extraText: '', extraTextOverPhoto: false, extraTextColor: preset ? preset.text : '#1E1E1E', nextIcon: true, comments: '', bgColor: preset ? preset.bg : '#FFFFFF', showFooter: false, footerText: '' };
 }
 function defaultObject(preset, bgOverride) {
   return { id: uid(), objectId: '', border: true, borderColor: preset.accent, bgColor: bgOverride || preset.card, shadow: false, expandable: true, minimizedByDefault: false, minimizedTitle: '', minimizedDesc: '', minimizedTextColor: preset.text, isMapOrExt: false };
@@ -614,7 +633,7 @@ export default function MashupBuilder() {
   const t = (key) => (I18N[lang] && I18N[lang][key]) || I18N.es[key] || key;
 
   const [global, setGlobal] = useState(autosave?.global || { appId: '', authType: 'anonymous', host: '', clientId: '', accessCode: '', redirectUri: '', generateOauthCallback: true });
-  const [header, setHeader] = useState(autosave?.header || defaultHeaderCfg());
+  const [header, setHeader] = useState({ ...defaultHeaderCfg(), ...(autosave?.header || {}) });
   const [defaultPresetKey, setDefaultPresetKey] = useState(autosave?.defaultPresetKey || 'qlik');
   const [initTab] = useState(() => makeTab('welcome', t('homeTabDefaultName'), 'qlik', header.defaultObjectBgColor, t));
   const [tabs, setTabs] = useState(() => (autosave?.tabs && autosave.tabs.length) ? autosave.tabs : [initTab]);
@@ -660,7 +679,7 @@ export default function MashupBuilder() {
         const data = parseProjectFile(String(reader.result));
         setLang(data.lang || 'es');
         setGlobal(data.global || { appId: '', authType: 'anonymous', host: '', clientId: '', accessCode: '', redirectUri: '', generateOauthCallback: true });
-        setHeader(data.header || defaultHeaderCfg());
+        setHeader({ ...defaultHeaderCfg(), ...(data.header || {}) });
         setDefaultPresetKey(data.defaultPresetKey || 'qlik');
         setTabs(data.tabs);
         setSelectedId(data.tabs.some(tb => tb.id === data.selectedId) ? data.selectedId : data.tabs[0].id);
@@ -709,7 +728,7 @@ export default function MashupBuilder() {
     const preset = PRESETS[presetKey];
     setTabs(prev => prev.map(tb => {
       if (tb.id !== id) return tb;
-      if (tb.type === 'welcome') return { ...tb, presetKey, welcome: { ...tb.welcome, bgColor: preset.bg, extraTextColor: preset.text } };
+      if (tb.type === 'welcome') return { ...tb, presetKey, welcome: { ...tb.welcome, bgColor: preset.bg, extraTextColor: preset.text, titleColor: preset.text } };
       return { ...tb, presetKey, analytics: { ...tb.analytics, bgColor: preset.bg, titleColor: preset.text, rows: tb.analytics.rows.map(r => ({ ...r, objects: r.objects.map(o => ({ ...o, borderColor: preset.accent, bgColor: preset.card })) })) } };
     }));
   }
@@ -946,6 +965,15 @@ function HeaderConfigBar({ header, setHeader }) {
         <ImageUrlField label={t('faviconLabel')} value={header.faviconUrl} onChange={v => set({ faviconUrl: v })} />
         <Field label={t('importCssLabel')}><TextInput value={header.importCssUrl} onChange={e => set({ importCssUrl: e.target.value })} placeholder="https://.../styles.css" /></Field>
       </div>
+      <div className="px-4 py-3 border-t border-gray-200 grid grid-cols-2 md:grid-cols-4 gap-3">
+        <Toggle checked={header.qlikAnswersEnabled} onChange={v => set({ qlikAnswersEnabled: v })} label={t('qlikAnswersToggle')} />
+        {header.qlikAnswersEnabled && (
+          <>
+            <Field label={t('qlikAnswersAssistantIdLabel')}><TextInput value={header.qlikAnswersAssistantId} onChange={e => set({ qlikAnswersAssistantId: e.target.value })} placeholder="assistant-id" /></Field>
+            <Field label={t('qlikAnswersPositionLabel')}><Select value={header.qlikAnswersPosition} onChange={v => set({ qlikAnswersPosition: v })} options={[{ value: 'left', label: t('left') }, { value: 'center', label: t('center') }, { value: 'right', label: t('right') }]} /></Field>
+          </>
+        )}
+      </div>
     </div>
   );
 }
@@ -953,12 +981,13 @@ function HeaderConfigBar({ header, setHeader }) {
 // ---------------------------------------------------------------------------
 // GENERAL SECTION
 // ---------------------------------------------------------------------------
-function GeneralSection({ tab, updateInfo, updateFooterIcon }) {
+function GeneralSection({ tab, updateInfo, updateFooterIcon, preset }) {
   const t = useT();
   return (
     <Section title={t('generalSectionTitle')}>
       <Toggle checked={tab.info.enabled} onChange={v => updateInfo({ enabled: v })} label={t('infoIconToggle')} />
       {tab.info.enabled && <Field label={t('infoPopupText')}><TextArea rows={3} value={tab.info.text} onChange={e => updateInfo({ text: e.target.value })} placeholder={t('infoPopupPlaceholder')} /></Field>}
+      {tab.info.enabled && <ColorField label={t('infoTextColorLabel')} value={tab.info.textColor || preset.text} onChange={v => updateInfo({ textColor: v })} />}
       <Field label={t('footerIconLabel')}><IconPicker value={tab.footerIcon} onChange={updateFooterIcon} /></Field>
     </Section>
   );
@@ -973,7 +1002,7 @@ function WelcomePanel({ tab, update, updateInfo, updateFooterIcon, applyPreset }
   const preset = PRESETS[tab.presetKey];
   return (
     <div>
-      <GeneralSection tab={tab} updateInfo={updateInfo} updateFooterIcon={updateFooterIcon} />
+      <GeneralSection tab={tab} updateInfo={updateInfo} updateFooterIcon={updateFooterIcon} preset={preset} />
       <Section title={t('paletteThisTab')}>
         <PaletteGrid activeKey={tab.presetKey} onPick={applyPreset} />
         <ColorField label={t('bgColorTab')} value={w.bgColor || preset.bg} onChange={v => update({ bgColor: v })} swatches={[preset.bg, preset.card]} />
@@ -989,6 +1018,7 @@ function WelcomePanel({ tab, update, updateInfo, updateFooterIcon, applyPreset }
       <Section title={t('titleSubtitle')}>
         <Field label={t('titleLabel')}><TextInput value={w.title} onChange={e => update({ title: e.target.value })} /></Field>
         <Field label={t('subtitleLabel')}><TextArea rows={2} value={w.subtitle} onChange={e => update({ subtitle: e.target.value })} /></Field>
+        <ColorField label={t('welcomeTitleColorLabel')} value={w.titleColor || preset.text} onChange={v => update({ titleColor: v })} />
         <Field label={t('textPosition')}>
           <Select value={w.titlePosition} onChange={v => update({ titlePosition: v })} options={[{ value: 'top-left', label: t('topLeft') }, { value: 'top-center', label: t('topCenter') }, { value: 'center', label: t('posCenter') }, { value: 'bottom-left', label: t('bottomLeft') }, { value: 'bottom-center', label: t('bottomCenter') }]} />
         </Field>
@@ -1016,7 +1046,7 @@ function AnalyticsPanel({ tab, global, update, updateInfo, updateFooterIcon, app
   const preset = PRESETS[tab.presetKey];
   return (
     <div>
-      <GeneralSection tab={tab} updateInfo={updateInfo} updateFooterIcon={updateFooterIcon} />
+      <GeneralSection tab={tab} updateInfo={updateInfo} updateFooterIcon={updateFooterIcon} preset={preset} />
 
       <Section title={t('paletteThisTab')}>
         <PaletteGrid activeKey={tab.presetKey} onPick={applyPreset} />
@@ -1146,7 +1176,7 @@ const posClasses = {
 };
 function oppositeZone(pos) { return pos === 'left' ? 'right' : pos === 'right' ? 'left' : 'right'; }
 
-function GlobalHeaderBarPreview({ header, preset, showMenu, onMenuClick, showFilter, filterButtons, onFilterClick, showInfo, onInfoClick }) {
+function GlobalHeaderBarPreview({ header, preset, showMenu, onMenuClick, showFilter, filterButtons, onFilterClick, showInfo, onInfoClick, onAnswersClick }) {
   const hasLogoGroup = header.logoUrl || header.textBefore || header.textAfter;
   const txtStyle = { color: header.textColor || preset.text, fontSize: `max(${header.minFontSize}px, 12px)` };
   const logoGroup = hasLogoGroup ? (
@@ -1159,6 +1189,10 @@ function GlobalHeaderBarPreview({ header, preset, showMenu, onMenuClick, showFil
   const zones = { left: null, center: null, right: null };
   if (logoGroup) zones[header.logoPosition] = logoGroup;
   if (header.extraImageUrl) { const z = oppositeZone(header.logoPosition); zones[z] = <>{zones[z]}<img src={header.extraImageUrl} className="h-5 w-5 object-cover rounded" /></>; }
+  if (header.qlikAnswersEnabled) {
+    const z = header.qlikAnswersPosition || 'right';
+    zones[z] = <>{zones[z]}<button onClick={onAnswersClick} className="p-1.5 shrink-0" title="Qlik Answers"><Sparkles size={20} /></button></>;
+  }
   return (
     <div className="flex items-center justify-between px-2.5 shrink-0" style={{ minHeight: 40, backgroundColor: header.bgColor || preset.bg, borderBottom: `1px solid ${preset.cardBorder}`, color: header.textColor || preset.text }}>
       <div className="flex items-center gap-1.5 flex-1 justify-start min-w-0">
@@ -1211,6 +1245,7 @@ function WelcomeContent({ tab, preset, tabs, onSelectTab, onNext, minFontSize, h
   const others = tabs.filter(tb => tb.id !== tab.id);
   const fs = (px) => ({ fontSize: `max(${minFontSize}px, ${px}px)` });
   const extraTextColor = w.extraTextColor || preset.text;
+  const titleColor = w.titleColor || preset.text;
   return (
     <div className="w-full" style={{ flex: '1 0 auto', display: 'flex', flexDirection: 'column', color: preset.text, backgroundColor: w.bgColor || preset.bg }}>
       <div className="relative w-full overflow-hidden" style={{ flex: `0 0 ${w.mediaHeightPct}%`, minHeight: 140 }}>
@@ -1219,7 +1254,7 @@ function WelcomeContent({ tab, preset, tabs, onSelectTab, onNext, minFontSize, h
         ) : (
           <div className="absolute inset-0" style={{ backgroundImage: w.mediaUrl ? `url(${w.mediaUrl})` : undefined, backgroundSize: 'cover', backgroundPosition: 'center', background: !w.mediaUrl ? `linear-gradient(135deg, ${preset.card}, ${preset.bg})` : undefined }} />
         )}
-        <div className={`relative z-10 flex flex-col p-4 w-full h-full ${posClasses[w.titlePosition]}`}>
+        <div className={`relative z-10 flex flex-col p-4 w-full h-full ${posClasses[w.titlePosition]}`} style={{ color: titleColor }}>
           <h1 className="font-extrabold leading-tight" style={fs(20)}>{w.title || 'Título'}</h1>
           {w.subtitle && <p className="mt-1 opacity-80 max-w-[85%]" style={fs(12)}>{w.subtitle}</p>}
           {w.extraText && w.extraTextOverPhoto && <p className="mt-2 max-w-[90%]" style={{ ...fs(12), color: extraTextColor }}>{w.extraText}</p>}
@@ -1303,6 +1338,7 @@ function PreviewFrame({ tab, tabs, header, onSelectTab, onNext, onPrev }) {
   const [infoOpen, setInfoOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [assistantOpen, setAssistantOpen] = useState(false);
   const [expandedObjId, setExpandedObjId] = useState(null);
   const expandedObj = findObjectInTab(tab, expandedObjId);
 
@@ -1311,9 +1347,20 @@ function PreviewFrame({ tab, tabs, header, onSelectTab, onNext, onPrev }) {
       <GlobalHeaderBarPreview header={header} preset={preset}
         showMenu={header.navStyle === 'hidden-top'} onMenuClick={() => setMenuOpen(o => !o)}
         showFilter={tab.type !== 'welcome' && header.filterEnabled} filterButtons={header.filterButtons || ['', '', '']} onFilterClick={() => setFilterOpen(o => !o)}
-        showInfo={tab.info.enabled} onInfoClick={() => setInfoOpen(o => !o)} />
+        showInfo={tab.info.enabled} onInfoClick={() => setInfoOpen(o => !o)}
+        onAnswersClick={() => setAssistantOpen(o => !o)} />
 
-      {expandedObj ? (
+      {assistantOpen ? (
+        <div className="flex-1 relative bg-white flex flex-col overflow-hidden z-40">
+          <div className="flex items-center justify-between px-3 py-2.5 border-b border-gray-200 shrink-0">
+            <span className="text-sm font-semibold text-gray-900 flex items-center gap-1.5"><Sparkles size={14} /> {t('qlikAnswersPanelTitle')}</span>
+          </div>
+          <div className="flex-1 flex items-center justify-center text-xs opacity-50 p-4 text-center">
+            {header.qlikAnswersAssistantId ? `Qlik Answers: ${header.qlikAnswersAssistantId}` : t('qlikAnswersPlaceholder')}
+          </div>
+          <button onClick={() => setAssistantOpen(false)} className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center text-lg z-40">×</button>
+        </div>
+      ) : expandedObj ? (
         <div className="flex-1 relative bg-white flex flex-col overflow-hidden">
           <div className="flex-1 flex items-center justify-center text-xs opacity-50 p-4 text-center">
             {expandedObj.objectId ? `Qlik: ${expandedObj.objectId} ${t('fullscreenLabel')}` : t('noObjectId')}
@@ -1378,8 +1425,8 @@ function PreviewFrame({ tab, tabs, header, onSelectTab, onNext, onPrev }) {
 
       {infoOpen && (
         <div className="absolute inset-0 bg-black/50 z-60 flex items-center justify-center p-6" onClick={() => setInfoOpen(false)}>
-          <div className="rounded-2xl p-5 max-w-[86%] text-xs relative shadow-2xl" style={{ backgroundColor: preset.card, color: preset.text }} onClick={e => e.stopPropagation()}>
-            <button onClick={() => setInfoOpen(false)} className="absolute top-3 right-3 opacity-70 text-lg leading-none" style={{ color: preset.text }}>×</button>
+          <div className="rounded-2xl p-5 max-w-[86%] text-xs relative shadow-2xl" style={{ backgroundColor: preset.card, color: tab.info.textColor || preset.text }} onClick={e => e.stopPropagation()}>
+            <button onClick={() => setInfoOpen(false)} className="absolute top-3 right-3 opacity-70 text-lg leading-none" style={{ color: tab.info.textColor || preset.text }}>×</button>
             <div className="font-extrabold uppercase tracking-wide mb-2.5" style={{ color: preset.accent, fontSize: 11, letterSpacing: '.05em' }}>{t('aboutAppTitle')}</div>
             <div className="leading-relaxed" style={{ fontSize: 12.5 }} dangerouslySetInnerHTML={{ __html: formatInfoTextHtml(tab.info.text, preset.accent) || `<p style="margin:0;">${esc(t('noInfoYet'))}</p>` }} />
           </div>
@@ -1559,6 +1606,12 @@ function buildGlobalFilterPanelHtml(header, global, tt) {
     : '<!-- Añade el object-id del panel de selecciones en la configuración -->';
   return `<div class="filter-panel" id="global-filter-panel" style="width:${header.filterPanelWidth}px;"><div class="filter-header"><span>${esc(tt('filtersTitle'))}</span><button class="filter-close" onclick="toggleFilterPanel()">&times;</button></div><div class="filter-body"><div class="filter-main-object">${mainHtml}</div></div></div>`;
 }
+function buildQlikAnswersPanelHtml(header, tt) {
+  const embedHtml = header.qlikAnswersAssistantId
+    ? `<div class="qa-embed" data-lazy-embed data-ui="ai/agentic-assistant" data-assistant-id="${esc(header.qlikAnswersAssistantId)}" data-appearance="qlik-light" style="display:block;height:600px;"></div>`
+    : '<!-- Añade el ID del asistente de Qlik Answers en la configuración -->';
+  return `<div class="qa-panel" id="qlik-answers-panel"><div class="qa-header"><span>${esc(tt('qlikAnswersPanelTitle'))}</span><button class="qa-close" onclick="toggleQlikAnswersPanel()">&times;</button></div><div class="qa-body">${embedHtml}</div></div>`;
+}
 function tabSectionHtml(tab, allTabs, global, header, index) {
   const preset = PRESETS[tab.presetKey];
   const appId = tab.type === 'analytics' && tab.analytics.useOwnAppId ? tab.analytics.appIdOverride : global.appId;
@@ -1579,7 +1632,7 @@ function tabSectionHtml(tab, allTabs, global, header, index) {
       ${w.mediaType === 'video' && w.mediaUrl
         ? `<video src="${esc(w.mediaUrl)}" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;"></video>`
         : `<div style="position:absolute;inset:0;${w.mediaUrl ? `background-image:url('${esc(w.mediaUrl)}');background-size:cover;background-position:center;` : `background:linear-gradient(135deg, ${preset.card}, ${preset.bg});`}"></div>`}
-      <div class="hero-text" style="position:relative;z-index:2;display:flex;flex-direction:column;height:100%;padding:20px;${posMap[w.titlePosition]}">
+      <div class="hero-text" style="position:relative;z-index:2;display:flex;flex-direction:column;height:100%;padding:20px;color:${w.titleColor || preset.text};${posMap[w.titlePosition]}">
         <h1 style="font-size:26px;font-weight:800;margin:0;">${esc(w.title)}</h1>
         ${w.subtitle ? `<p style="${fs(13)}opacity:.85;margin-top:6px;max-width:85%;">${esc(w.subtitle)}</p>` : ''}
         ${w.extraText && w.extraTextOverPhoto ? `<p style="${fs(13)}margin-top:8px;max-width:90%;color:${w.extraTextColor || preset.text};">${esc(w.extraText)}</p>` : ''}
@@ -1625,6 +1678,10 @@ function generateIndexHtml(global, header, tabs, lang) {
   const zoneContent = { left: '', center: '', right: '' };
   zoneContent[header.logoPosition] += logoGroupHtml;
   if (header.extraImageUrl) zoneContent[extraZone] += `<img class="extra-img" src="${esc(header.extraImageUrl)}" alt="">`;
+  if (header.qlikAnswersEnabled) {
+    const qaZone = header.qlikAnswersPosition || 'right';
+    zoneContent[qaZone] += `<button class="icon-btn" id="global-answers-btn" onclick="toggleQlikAnswersPanel()" aria-label="Qlik Answers">${ASSISTANT_SVG}</button>`;
+  }
 
   const footerNavHtml = header.navStyle === 'footer'
     ? `<nav class="app-footer" id="app-footer" style="--icon-color:${esc(header.footerIconColor || '#009845')};">
@@ -1645,10 +1702,11 @@ function generateIndexHtml(global, header, tabs, lang) {
     : '';
   const infoPopupsHtml = tabs.filter(t => t.info.enabled).map(t => {
     const preset = PRESETS[t.presetKey];
-    return `<div class="info-popup" id="info-popup-${t.id}" style="display:none;"><div class="info-popup-inner" style="background:${preset.card};color:${preset.text};"><button class="popup-close" onclick="toggleInfoPopup('${t.id}')">&times;</button><div class="info-popup-title" style="color:${preset.accent};">${esc(tt('aboutAppTitle'))}</div>${formatInfoTextHtml(t.info.text, preset.accent)}</div></div>`;
+    return `<div class="info-popup" id="info-popup-${t.id}" style="display:none;"><div class="info-popup-inner" style="background:${preset.card};color:${t.info.textColor || preset.text};"><button class="popup-close" onclick="toggleInfoPopup('${t.id}')">&times;</button><div class="info-popup-title" style="color:${preset.accent};">${esc(tt('aboutAppTitle'))}</div>${formatInfoTextHtml(t.info.text, preset.accent)}</div></div>`;
   }).join('\n');
   const filterPanelHtml = header.filterEnabled ? buildGlobalFilterPanelHtml(header, global, tt) : '';
   const filterBackdrop = header.filterEnabled ? `<div class="filter-backdrop" id="filter-backdrop"></div>` : '';
+  const qlikAnswersPanelHtml = header.qlikAnswersEnabled ? buildQlikAnswersPanelHtml(header, tt) : '';
   const filterButtonsIds = (header.filterButtons || []).filter(id => id && id.trim());
   const filterButtonsHtml = header.filterEnabled && filterButtonsIds.length
     ? `<span id="global-filter-buttons" style="display:none;">${filterButtonsIds.map(id => `<div class="header-filter-btn-slot" data-lazy-embed data-ui="analytics/chart" data-object-id="${esc(id)}" data-app-id="${esc(global.appId)}"></div>`).join('')}</span>`
@@ -1728,6 +1786,12 @@ ${authScript}
   .filter-body qlik-embed { width:100%; height:100%; display:block; }
   .filter-main-object { flex:1; min-height:0; position:relative; }
   .filter-main-embed { width:100%; height:100%; }
+  .qa-panel { position:fixed; inset:0; background:#fff; z-index:66; display:none; flex-direction:column; }
+  .qa-panel.open { display:flex; }
+  .qa-header { flex-shrink:0; display:flex; align-items:center; justify-content:space-between; padding:12px 14px; border-bottom:1px solid #eee; font-weight:700; }
+  .qa-close { border:none; background:none; font-size:20px; cursor:pointer; }
+  .qa-body { flex:1; overflow-y:auto; position:relative; }
+  .qa-body .qa-embed, .qa-body qlik-embed { width:100%; display:block; }
   .header-filter-btn-slot { width:40px; height:40px; flex-shrink:0; overflow:hidden; background:transparent; display:flex; align-items:center; justify-content:center; }
   .header-filter-btn-slot qlik-embed { width:100%; height:100%; display:block; }
   #global-filter-buttons { display:none; align-items:center; gap:6px; }
@@ -1769,6 +1833,7 @@ ${hiddenMenuHtml}
 ${infoPopupsHtml}
 ${filterPanelHtml}
 ${filterBackdrop}
+${qlikAnswersPanelHtml}
 <script>
   const TAB_COUNT = ${tabs.length};
   const TAB_META = ${JSON.stringify(tabs.map(t => ({ id: t.id, infoEnabled: !!(t.info && t.info.enabled), isWelcome: t.type === 'welcome' })))};
@@ -1790,8 +1855,10 @@ ${filterBackdrop}
     if (!container || container.dataset.mounted === '1') return;
     var el = document.createElement('qlik-embed');
     el.setAttribute('ui', container.dataset.ui);
-    el.setAttribute('app-id', container.dataset.appId || '');
+    if (container.dataset.appId) el.setAttribute('app-id', container.dataset.appId);
     if (container.dataset.objectId) el.setAttribute('object-id', container.dataset.objectId);
+    if (container.dataset.assistantId) el.setAttribute('assistant-id', container.dataset.assistantId);
+    if (container.dataset.appearance) el.setAttribute('appearance', container.dataset.appearance);
     container.appendChild(el);
     container.dataset.mounted = '1';
   }
@@ -1847,6 +1914,12 @@ ${filterBackdrop}
     const opening = el && !el.classList.contains('open');
     if (el) el.classList.toggle('open');
     if (backdrop) backdrop.classList.toggle('open');
+    if (opening) mountAllIn(el);
+  }
+  function toggleQlikAnswersPanel() {
+    const el = document.getElementById('qlik-answers-panel');
+    const opening = el && !el.classList.contains('open');
+    if (el) el.classList.toggle('open');
     if (opening) mountAllIn(el);
   }
   function toggleHiddenMenu() {
